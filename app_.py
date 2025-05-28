@@ -1,0 +1,40 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "_eCw2dccdxDS"
+      },
+      "outputs": [],
+      "source": [
+        "# src/api.py\n",
+        "import yfinance as yf\n",
+        "\n",
+        "def get_stock_price(user_input: str) -> str:\n",
+        "    tickers = [\"AAPL\", \"GOOGL\", \"MSFT\", \"TSLA\"]\n",
+        "    for ticker in tickers:\n",
+        "        if ticker in user_input.upper():\n",
+        "            stock = yf.Ticker(ticker)\n",
+        "            data = stock.history(period=\"1d\")\n",
+        "            latest_price = data[\"Close\"].iloc[-1]\n",
+        "            return f\"The latest price of {ticker} is ${latest_price:.2f}.\"\n",
+        "    return \"Sorry, I couldn't identify the stock ticker in your question.\"\n"
+      ]
+    }
+  ]
+}
