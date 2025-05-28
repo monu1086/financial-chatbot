@@ -27,7 +27,7 @@ financial-chatbot/
 ## ⚙️ Setup Instructions
 1. **Clone the repo**:
 ```bash
-git clone https://github.com/your-username/financial-chatbot.git
+git clone https://github.com/monu1086/financial-chatbot.git
 cd financial-chatbot
 ```
 
@@ -56,7 +56,7 @@ streamlit run app.py
 - You can deploy this app using [Streamlit Cloud](https://streamlit.io/cloud) for free.
 
 ## 👤 Author
-Monish Sai — [GitHub](https://github.com/your-username)
+Monish Sai — [GitHub](https://github.com/monu1086)
 
 ---
 
