@@ -1,55 +1,19 @@
-{
-  "nbformat": 4,
-  "nbformat_minor": 0,
-  "metadata": {
-    "colab": {
-      "provenance": []
-    },
-    "kernelspec": {
-      "name": "python3",
-      "display_name": "Python 3"
-    },
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "cells": [
-    {
-      "cell_type": "code",
-      "execution_count": null,
-      "metadata": {
-        "id": "2A_ECD6IY7wZ"
-      },
-      "outputs": [],
-      "source": [
-        "# app.py\n",
-        "import streamlit as st\n",
-        "from src.llm import ask_llm\n",
-        "from src.api import get_stock_price\n",
-        "\n",
-        "st.set_page_config(page_title=\"AI Financial Chatbot\", layout=\"centered\")\n",
-        "st.title(\"💸 AI-Powered Financial Chatbot\")\n",
-        "\n",
-        "# Chat Interface\n",
-        "if \"chat_history\" not in st.session_state:\n",
-        "    st.session_state.chat_history = []\n",
-        "\n",
-        "user_input = st.text_input(\"Ask a financial question (e.g., 'Latest AAPL stock price', 'Summarize this 10-K'):\")\n",
-        "\n",
-        "if st.button(\"Ask\") and user_input:\n",
-        "    # Determine if it's a live data request\n",
-        "    if \"price\" in user_input.lower() and any(ticker in user_input.upper() for ticker in [\"AAPL\", \"GOOGL\", \"MSFT\", \"TSLA\"]):\n",
-        "        response = get_stock_price(user_input)\n",
-        "    else:\n",
-        "        response = ask_llm(user_input)\n",
-        "\n",
-        "    st.session_state.chat_history.append((user_input, response))\n",
-        "\n",
-        "# Display chat history\n",
-        "for q, a in reversed(st.session_state.chat_history):\n",
-        "    st.markdown(f\"**You:** {q}\")\n",
-        "    st.markdown(f\"**Bot:** {a}\")\n"
-      ]
-    }
-  ]
-}
+import streamlit as st
+from src.llm import get_llm_response
+from src.api import get_stock_price
+
+st.set_page_config(page_title="AI Financial Chatbot", layout="centered")
+
+st.title("💬 AI-Powered Financial Chatbot")
+st.markdown("Ask me anything about finance or investments.")
+
+query = st.text_input("Type your question here 👇")
+
+if query:
+    with st.spinner("Thinking..."):
+        if "stock price" in query.lower():
+            response = get_stock_price(query)
+        else:
+            response = get_llm_response(query)
+
+        st.success(response)
